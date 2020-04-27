@@ -1,0 +1,320 @@
+------------------------------- Quick Sort VS Merge Sort ------------------------------     
+
+1. Quick sort is an IN-PLACE Algorithm while Merge sort is not
+	# It means that Quick sort does not require any additional memory while executing. It just sorts everything in the very array where the unsorted elements are present. Whereas Merge sort requires extra memory (a lot of memory if the array is large). And the amount of extra memory required is Big-Oh(n) which means it is directly proportional to the input size n.
+		 
+2.  Quick Sort is NOT a stable sorting algorithm while Merge is.
+	# meaning of stable algorithm :
+		* A sorting algorithm is said to be stable if two objects with equal keys appear in the same order in the sorted output as they appear in the unsorted input. Whereas a sorting algorithm is said to be unstable if there are two or more objects with equal keys which don’t appear in same order before and after sorting. 
+
+	# Example : 
+	    0        1      2      3      4     6     7     8
+	|=======|=======|======|======|======|=====|=====|=====|
+	|	7	|	 2	|  8   |   8  |	 9	 |  4  |  8  |  10 |
+	|=======|=======|======|======|======|=====|=====|=====|
+
+
+	* if stable the order of 8, 8 will be the same index 2 will be before index 3.
+	* if not stable the order of 8, 8 will not be the same index 3 might come before index 2.
+
+
+
+	# QuickSort is an unstable algorithm because we do swapping of elements according to pivot’s position (without considering their original positions).
+
+
+3. Merge sort does the recursion first then the actual sorting (combination) while quick sort does the partitioning first(sorting) then the  
+   recursion.	
+
+
+Q: Is Quicksort Really Quick ?
+
+	There is a clear, asymptotic difference between an Θ(n log n) algorithm and one
+	that runs in Θ(n^2 ). Thus, only the most obstinate reader would doubt my claim
+	that mergesort, heapsort, and quicksort should all outperform insertion sort or
+	selection sort on large enough instances.
+
+	What we can say is that experiments show that where a properly implemented
+	quicksort is implemented well, it is typically 2-3 times faster than mergesort or
+	heapsort. The primary reason is that the operations in the innermost loop are
+	simpler. But I can’t argue with you if you don’t believe me when I say quicksort is
+	faster. It is a question whose solution lies outside the analytical tools we are using.
+	The best way to tell is to implement both algorithms and experiment.
+
+------------------------------- End of Quick Sort VS Merge Sort ------------------------
+
+
+---------------------------------- Partitioning Steps --------------------------------
+
+1. The left pointer (i) continuously moves one cell to the right until it reaches a
+value that is greater than to the pivot, and then stops.
+
+2. Then, the right pointer (j) continuously moves one cell to the left until it
+reaches a value that is less than to the pivot, and then stops.
+
+3. We swap the values that the left and right pointers are pointing to.
+
+4. We continue this process until the left pointer(i) value is bigger than or equal to the right pointer(j).
+
+5. Finally, we swap the pivot with the value that the right pointer is currently
+pointing to.
+
+When we’re done with a partition, we are now assured that all values to the left
+of the pivot are less than the pivot, and all values to the right of the pivot are
+greater than it. And that means that the pivot itself is now in its correct place
+within the array, although the other values are not yet necessarily completely
+sorted.
+
+		 	
+     i <= pivot :   i++  : stop the loop  
+
+     j >= pivot :   j--  : stop the loop
+
+     i < j : swap arr[i], arr[j]  :  swap arr[j], pivot
+
+
+-------------------------End of Partitioning Steps -------------------------------------
+
+
+-------------------------------- Example -----------------------------------------------
+
+
+    i                                               j
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  8   |   6  |	 9	 |  4  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+	i = 0 ;  arr[i] : 7  <= 7 (pivot)   ?         yes ---> i++
+
+             i                                      j
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  8   |   6  |	 9	 |  4  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	i = 1  ;   arr[i] : 2  <= 7 (pivot)   ?       yes ---> i++
+
+
+                    i                               j
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  8   |   6  |	 9	 |  4  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	i = 2  ;   arr[i] : 8  <= 7 (pivot)   ?       no ---> stop
+
+
+                    i                               j
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  8   |   6  |	 9	 |  4  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	j = 7  ;   arr[j] : 10  >= 7 (pivot)   ?       yes ---> j--
+
+
+                    i                          j      
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  8   |   6  |	 9	 |  4  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	j = 6  ;   arr[j] : 8  >= 7 (pivot)   ?       yes ---> j--
+
+
+                    i                    j      
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  8   |   6  |	 9	 |  4  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	j = 5  ;   arr[j] : 4  >= 7 (pivot)   ?       no --->  stop and swap arr[i] : 8 with arr[j] : 4
+
+Note : remember that we check if i < j then we swap the arr[i], arr[j] but else we swap the arr[j], pivot
+
+
+                    i                   j      
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  4   |   6  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	i = 2  ;   arr[i] : 4  <= 7 (pivot)   ?       yes ---> i++
+
+
+
+                           i            j      
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  4   |   6  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	i = 3  ;   arr[i] : 6  <= 7 (pivot)   ?       yes ---> i++
+
+
+                                  i     j      
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  4   |   6  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	i = 4  ;   arr[i] : 9  <= 7 (pivot)   ?       no ---> stop
+
+
+                                  i     j      
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  4   |   6  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	j = 5  ;   arr[j] : 8  >= 7 (pivot)   ?       yes ---> j--
+
+
+                                 i j           
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  4   |   6  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	j = 4  ;   arr[j] : 9  >= 7 (pivot)   ?       yes ---> j--
+
+
+
+                           j      i            
+|=======|=======|======|======|======|=====|=====|=====|
+|	7	|	 2	|  4   |   6  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+	j = 3  ;   arr[j] : 6  >= 7 (pivot)   ?       no ---> stop and swap the pivot arr[0] : 7 with arr[j] : 6
+
+
+                           j      i            
+|=======|=======|======|======|======|=====|=====|=====|
+|	6	|	 2	|  4   |   7  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|	
+
+
+* return the j (current pivot point the split point and repeat the process again)
+
+     i                     j             
+|=======|=======|======|======|======|=====|=====|=====|
+|	6	|	 2	|  4   |   7  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|																								 																					   
+																								    
+	i = 0  ;   arr[i] : 6  <= 6 (pivot)   ?       yes ---> i++
+																								      
+																								            
+
+             i             j             
+|=======|=======|======|======|======|=====|=====|=====|
+|	6	|	 2	|  4   |   7  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|
+
+
+
+	i = 1  ;   arr[i] : 2  <= 6 (pivot)   ?       yes ---> i++
+
+
+                   i       j             
+|=======|=======|======|======|======|=====|=====|=====|
+|	6	|	 2	|  4   |   7  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|
+
+
+
+	i = 2  ;   arr[i] : 4  <= 6 (pivot)   ?       yes ---> i++
+
+
+
+                          i j             
+|=======|=======|======|======|======|=====|=====|=====|
+|	6	|	 2	|  4   |   7  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|
+
+
+
+	i = 3  ;   arr[i] : 7  <= 6 (pivot)   ?       no ---> stop
+
+
+                          i j             
+|=======|=======|======|======|======|=====|=====|=====|
+|	6	|	 2	|  4   |   7  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|
+
+
+
+	j = 3  ;   arr[j] : 7  >= 6 (pivot)   ?     yes ---> j--
+
+
+
+                    j      i              
+|=======|=======|======|======|======|=====|=====|=====|
+|	6	|	 2	|  4   |   7  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|
+
+
+
+	j = 2  ;   arr[j] : 4  >= 6 (pivot)   ?     no ---> stop and swap pivot with arr[j]
+
+
+
+                    j      i              
+|=======|=======|======|======|======|=====|=====|=====|
+|	4	|	 2	|  6   |   7  |	 9	 |  8  |  8  |  10 |
+|=======|=======|======|======|======|=====|=====|=====|
+
+
+
+
+
+
+-------------------------------- Example -----------------------------------------------
+
+
+
+
+
+
+		                       				QS(0, 7)
+		                          				|
+                      --------------------------------------------------------------------------------------
+                      |          		 		|                    			          				   |
+                      |         			    |				     			                  		   |
+                      v           				v				       			           				   v
+                    P(0, 7)      			  Left                                		 				 Right
+                    			   			    |                                   	   				   | 
+                    			  				|										   				   |
+                    			  				v										   				   v
+                    						QS(0, 3)						   		  				 QS(3 + 1 : 4, 7)
+                    			  				|										   				   |
+                    				------------------------		  	       	-------------------------------------------------
+                    				|           |          |				    |                          |                    |
+                    				|			|          |					|                          |                    |
+                    				v        	v          v                    v                          v                    v
+                    			  P(0,3)	   Left    QS(2 + 1, 3)          P(4, 7)                      Left                Right
+                    						    |          X                                               |                    |
+                    						    |														   |	                |
+                    						    v                										   v                    v
+                    			            QS(0, 2)                                                    QS(4, 6)            QS(6 + 1, 7)
+                    			                |                                                          |                    X 
+                               -----------------------------------					     --------------------------------- 					   
+                               |                |				 |						 |				   |             |
+                               |                |				 |                       |                 |             |
+                               v                v                v                       v                 v             v
+                            P(0, 2)  		  Left              Right                 P(4, 6)             Left         Right
+                            					|	             |										   |	         |
+                            					|				 |                                         |             |
+                            					v                v  									   v	 	     v
+                            				QS(0, 1)         QS(1 + 1, 2)								QS(4, 4)     QS(4 + 1, 6)
+                            					|				  X                                        X             |
+                         		-----------------------------------    					                  -------------------------------
+                                |               |                 |                                       |              |              | 
+                                |				|                 |                                       |              |              |
+                                v               v                 v                                       v              v              v 
+                             P(0, 1)           Left             Right                                  P(5, 6)         Left           Right
+                             					|                 |                                                      |              |
+                             					|                 |                                                      |              |
+                             					v                 v                                                      v              v
+                             				QS(0, 0)	     QS(0 + 1 , 1)                                            QS(5, 5)    QS( 5 + 1, 6)
+                             					X			 QS(1, 1)                                                    X              X
+                                                                  X          
